@@ -11,8 +11,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseInMemoryDatabase("InMem");
 });
+builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -22,6 +24,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
+
+app.MapControllers();
 
 app.UseHttpsRedirection();
 mockData.dataPopulation(app);
